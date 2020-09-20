@@ -1,42 +1,113 @@
 function logSubmit(event) {
   event.preventDefault();
 
-  console.log('--------');
-  console.log('income: ' + income.value);
-  console.log('Current: ' + calculateCurrent(income.value));
-  console.log('Greens: ' + calculateGreen(income.value));
-  console.log('Labour: ' + calculateLabour(income.value));
-  console.log('National: ' + calculateNational(income.value));
+  var current = calculateCurrent(income.value);
+  var labour = calculateLabour(income.value);
+  var green = calculateGreen(income.value);
+  var national = calculateNational(income.value);
 
   log.innerHTML = "<div class='results'>\
   	<div class='current'>\
   		<h2>Current</h2>\
-  		<div class='pay'><h3>Income after tax<h3> <span>$" + (income.value - calculateCurrent(income.value)) + "</span></div>\
-  		<div class='pay'><h3>Tax paid<h3> <span>$" + calculateCurrent(income.value) + "</span></div>\
+  		<div class='pay'>\
+  			<h3>Income after tax</h3>\
+  			<div class='amount'>$" + comas(income.value - current) + "</div>\
+  			<div class='change'>&nbsp;</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Tax paid</h3>\
+  			<div class='amount'>$" + comas(current) + "</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Weekly income</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - current) / 52)) + "</div>\
+  			<div class='change'>&nbsp;</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Over three years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - current) * 3)) + "</div>\
+  			<div class='change'>&nbsp;</div>\
+  		</div>\
   	</div>\
   	<div class='labour'>\
   		<h2>Labour</h2>\
-  		<div class='pay'><h3>Income after tax<h3> <span>$" + (income.value - calculateLabour(income.value)) + "</span></div>\
-  		<div class='pay'><h3>Tax paid<h3> <span>$" + calculateLabour(income.value) + "</span></div>\
+  		<div class='pay'>\
+  			<h3>Income after tax</h3>\
+  			<div class='amount'>$" + comas(income.value - labour) + "</div>\
+  			" + change(income.value - labour, income.value - current) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Tax paid</h3>\
+  			<div class='amount'>$" + comas(labour) + "</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Weekly income</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - labour) / 52)) + "</div>\
+  			" + change((income.value - labour) / 52, (income.value - current) / 52) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Over three years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - labour) * 3)) + "</div>\
+  			" + change((income.value - labour) * 3, (income.value - current) * 3) + "\
+  		</div>\
   	</div>\
   	<div class='green'>\
   		<h2>Greens</h2>\
-  		<div class='pay'><h3>Income after tax<h3> <span>$" + (income.value - calculateGreen(income.value)) + "</span></div>\
-  		<div class='pay'><h3>Tax paid<h3> <span>$" + calculateGreen(income.value) + "</span></div>\
+  		<div class='pay'>\
+  			<h3>Income after tax</h3>\
+  			<div class='amount'>$" + comas(income.value - green) + "</div>\
+  			" + change(income.value - green, income.value - current) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Tax paid</h3>\
+  			<div class='amount'>$" + comas(green) + "</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Weekly income</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - green) / 52)) + "</div>\
+  			" + change((income.value - green) / 52, (income.value - current) / 52) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Over three years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - green) * 3)) + "</div>\
+  			" + change((income.value - green) * 3, (income.value - current) * 3) + "\
+  		</div>\
   	</div>\
   	<div class='national'>\
   		<h2>National</h2>\
-  		<div class='pay'><h3>Income after tax<h3> <span>$" + (income.value - calculateNational(income.value)) + "</span></div>\
-  		<div class='pay'><h3>Tax paid<h3> <span>$" + calculateNational(income.value) + "</span></div>\
+  		<div class='pay'>\
+  			<h3>Income after tax*</h3>\
+  			<div class='amount'>$" + comas(income.value - national) + "</div>\
+  			" + change(income.value - national, income.value - current) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Tax paid*</h3>\
+  			<div class='amount'>$" + comas(national) + "</div>\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Weekly income*</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - national) / 52)) + "</div>\
+  			" + change((income.value - national) / 52, (income.value - current) / 52) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Over three years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - national) / 12 * 16 + (income.value - current) / 12 * 20)) + "</div>\
+  			" + change((income.value - national) / 12 * 16 + (income.value - current) / 12 * 20, (income.value - current) * 3) + "\
+  		</div>\
+  		<footer>*for first year<br>reduced rate for 16 months</footer>\
   	</div>\
   </div>";
 }
 
-const form = document.getElementById('tax');
-const log = document.getElementById('log');
-const income = document.getElementById('income');
+// renders a default state if there is an income amount present
+function launch() {
+	const form = document.getElementById('tax');
+	const log = document.getElementById('log');
+	const income = document.getElementById('income');
+	form.addEventListener('submit', logSubmit);
+}
 
-form.addEventListener('submit', logSubmit);
+launch();
 
 
 
@@ -155,9 +226,31 @@ function processRate(x) {
 	// return is the dollar amount of tax taken within this threshold
 }
 
+function change(after, before) {
 
+	var direction;
+	var percentage = 0;
+	var amount = 0;
+	var difference = after - before;
 
+	if(difference > 0) {
+		amount = comas(difference.toFixed(0));
+		percentage = (difference / before) * 100
+		direction = "up";
+	} else if (difference < 0) {
+		amount = comas(difference.toFixed(0));
+		percentage = (difference / before) * 100
+		direction = "down";
+	} else {
+		return "<div class='change'>NC</div>"
+	}
 
+	return "<div class='change " + direction + "'>" + amount + " (" + percentage.toFixed(2) + "%)</div>";
+}
+
+function comas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 
