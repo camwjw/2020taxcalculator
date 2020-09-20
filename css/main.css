@@ -272,7 +272,7 @@ body {
 }
 
 main {
-  text-align: center;
+  text-align: left;
 }
 
 form {
@@ -312,6 +312,7 @@ input[type=submit] {
 h2 {
   font-size: 24px;
   margin: 0 0 8px;
+  padding: 12px;
 }
 
 h3 {
@@ -333,12 +334,12 @@ h3 {
 }
 
 .results > * {
-  padding: 24px;
+  padding: 12px;
 }
 
 
   .pay {
-    margin:  0 0 16px;
+    margin: 0 0 16px;
   }
 
   .amount {
