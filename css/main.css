@@ -383,14 +383,30 @@ h3 {
   background: #126B91;
 }
 
-footer {
+.results footer {
   font-family: sans-serif;
   font-weight: normal;
   font-size: 12px;
   opacity:  0.8;
 }
 
+footer {
+  font-size: 12px;
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  opacity:  0.8;
+  text-align: left;
+}
 
+footer a {
+  color:  #fff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
 
 
 
