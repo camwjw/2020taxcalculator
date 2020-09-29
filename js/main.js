@@ -28,6 +28,11 @@ function logSubmit(event) {
   			<div class='amount'>$" + comas(Math.round((income.value - current) * 3)) + "</div>\
   			<div class='change'>&nbsp;</div>\
   		</div>\
+  		<div class='pay'>\
+  			<h3>Over six years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - current) * 6)) + "</div>\
+  			<div class='change'>&nbsp;</div>\
+  		</div>\
   	</div>\
   	<div class='labour'>\
   		<h2>Labour</h2>\
@@ -49,6 +54,11 @@ function logSubmit(event) {
   			<h3>Over three years</h3>\
   			<div class='amount'>$" + comas(Math.round((income.value - labour) * 3)) + "</div>\
   			" + change((income.value - labour) * 3, (income.value - current) * 3) + "\
+  		</div>\
+  		<div class='pay'>\
+  			<h3>Over six years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - labour) * 6)) + "</div>\
+  			" + change((income.value - labour) * 6, (income.value - current) * 6) + "\
   		</div>\
   	</div>\
   	<div class='green'>\
@@ -72,6 +82,11 @@ function logSubmit(event) {
   			<div class='amount'>$" + comas(Math.round((income.value - green) * 3)) + "</div>\
   			" + change((income.value - green) * 3, (income.value - current) * 3) + "\
   		</div>\
+  		<div class='pay'>\
+  			<h3>Over six years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - green) * 6)) + "</div>\
+  			" + change((income.value - green) * 6, (income.value - current) * 6) + "\
+  		</div>\
   	</div>\
   	<div class='national'>\
   		<h2>National</h2>\
@@ -94,6 +109,11 @@ function logSubmit(event) {
   			<div class='amount'>$" + comas(Math.round((income.value - national) / 12 * 16 + (income.value - current) / 12 * 20)) + "</div>\
   			" + change((income.value - national) / 12 * 16 + (income.value - current) / 12 * 20, (income.value - current) * 3) + "\
   		</div>\
+  		<div class='pay'>\
+  			<h3>Over six years</h3>\
+  			<div class='amount'>$" + comas(Math.round((income.value - national) / 12 * 16 + (income.value - current) / 12 * 56)) + "</div>\
+  			" + change((income.value - national) / 12 * 16 + (income.value - current) / 12 * 56, (income.value - current) * 6) + "\
+  		</div>\
   		<footer>*for first year<br>reduced rate for 16 months</footer>\
   	</div>\
   </div>";
@@ -105,6 +125,7 @@ function launch() {
 	const log = document.getElementById('log');
 	const income = document.getElementById('income');
 	form.addEventListener('submit', logSubmit);
+	//form.submit();
 }
 
 launch();
